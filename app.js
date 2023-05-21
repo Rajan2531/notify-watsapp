@@ -54,7 +54,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:"Hi... I am rajan's whatsapp bot"
+                        body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
                     }
                 },
                 headers:{
