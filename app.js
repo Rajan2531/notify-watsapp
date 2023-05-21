@@ -35,23 +35,7 @@ app.get("/webhook",(req,res)=>{
 })
 
 
-const sendMessage=(phone_no_id,from,msg_body)=>{
 
-    axios({
-        method:"POST",
-        url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
-        data:{
-            messaging_product:"whatsapp",
-            to:from,
-            text:{
-                body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
-            }
-        },
-        headers:{
-            "Content-Type":"application/json"
-        }
-    })
-}
 app.post("/webhook", (req,res)=>{
     let body_param=req.body;
     console.log(body_param);
@@ -65,7 +49,23 @@ app.post("/webhook", (req,res)=>{
             let phone_no_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
+            const sendMessage=()=>{
 
+                axios({
+                    method:"POST",
+                    url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
+                    data:{
+                        messaging_product:"whatsapp",
+                        to:from,
+                        text:{
+                            body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
+                        }
+                    },
+                    headers:{
+                        "Content-Type":"application/json"
+                    }
+                })
+            }
             axios({
                 method:"POST",
                 url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
@@ -80,7 +80,7 @@ app.post("/webhook", (req,res)=>{
                     "Content-Type":"application/json"
                 }
             })
-            setTimeout(sendMessage(phone_no_id,from,msg_body),5000);
+            setTimeout(sendMessage,5000);
 
             res.sendStatus(200);
 
