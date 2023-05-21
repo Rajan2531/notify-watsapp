@@ -1,8 +1,9 @@
 const express = require("express");
 const bodyparser= require("body-parser");
 const axios = require("axios");
-const app=express();
 const dotenv= require("dotenv");
+const app=express();
+
 dotenv.config({path:"./config.env"})
 app.use(bodyparser.json());
 app.get('/',(req,res)=>{
