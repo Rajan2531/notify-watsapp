@@ -2,6 +2,7 @@ const express = require("express");
 const bodyparser= require("body-parser");
 const axios = require("axios");
 const dotenv= require("dotenv");
+var moment = require('moment')
 const app=express();
 
 dotenv.config({path:"./config.env"})
@@ -33,6 +34,24 @@ app.get("/webhook",(req,res)=>{
     
 })
 
+
+const sendMessage=(phone_no_id,from,msg_body)=>{
+
+    axios({
+        method:"POST",
+        url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
+        data:{
+            messaging_product:"whatsapp",
+            to:from,
+            text:{
+                body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
+            }
+        },
+        headers:{
+            "Content-Type":"application/json"
+        }
+    })
+}
 app.post("/webhook", (req,res)=>{
     let body_param=req.body;
     console.log(body_param);
@@ -54,13 +73,14 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
+                        body:"Your task added!!!"
                     }
                 },
                 headers:{
                     "Content-Type":"application/json"
                 }
             })
+            setTimeout(sendMessage(phone_no_id,from,msg_body),5000);
 
             res.sendStatus(200);
 
