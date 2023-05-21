@@ -58,7 +58,7 @@ app.post("/webhook", (req,res)=>{
                         messaging_product:"whatsapp",
                         to:from,
                         text:{
-                            body:"Hi, I am rajan's server, currently in development stage. Will be your reminder soon..."
+                            body:msg_body
                         }
                     },
                     headers:{
@@ -66,20 +66,20 @@ app.post("/webhook", (req,res)=>{
                     }
                 })
             }
-            axios({
-                method:"POST",
-                url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
-                data:{
-                    messaging_product:"whatsapp",
-                    to:from,
-                    text:{
-                        body:"Your task added!!!"
-                    }
-                },
-                headers:{
-                    "Content-Type":"application/json"
-                }
-            })
+            // axios({
+            //     method:"POST",
+            //     url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
+            //     data:{
+            //         messaging_product:"whatsapp",
+            //         to:from,
+            //         text:{
+            //             body:"Your task added!!!"
+            //         }
+            //     },
+            //     headers:{
+            //         "Content-Type":"application/json"
+            //     }
+            // })
             setTimeout(sendMessage,5000);
 
             res.sendStatus(200);
