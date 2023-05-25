@@ -67,13 +67,13 @@ app.post("/webhook", (req,res)=>{
             const message=msg_body.slice(0,msg_body.length-21)
             console.log(message);
             let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
-            let recievedTime=new Date(time).set;
+            let recievedTime=new Date(time);
             const currentTime= new Date();
             const timeDifference=(recievedTime-currentTime);
             console.log(timeDifference,typeof(timeDifference));
             const sendMessage=()=>{
                 console.log(message);
-                console.log("send message function was called as scheduled");
+                console.log("send message function was called as scheduled",Date.now().toLocaleString());
 
                 axios({
                     method:"POST",
