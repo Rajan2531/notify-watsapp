@@ -67,7 +67,7 @@ app.post("/webhook", (req,res)=>{
             let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
             let recievedTime=new Date(time);
             const currentTime= new Date();
-            const timeDifference=(recievedTime.getTime()-currentTime.getTime())/1000;
+            const timeDifference=(recievedTime.getTime()-currentTime.getTime());
             console.log(timeDifference,typeof(timeDifference));
             const sendMessage=()=>{
                 console.log(message);
@@ -80,7 +80,7 @@ app.post("/webhook", (req,res)=>{
                         messaging_product:"whatsapp",
                         to:from,
                         text:{
-                            body:message
+                            body:`${message}`
                         }
                     },
                     headers:{
@@ -95,7 +95,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:`Your task "${message}" added!!!   ${time}`
+                        body:`Your task "${message}" added. We will remind you on given time`
                     }
                 },
                 headers:{
