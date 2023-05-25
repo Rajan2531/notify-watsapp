@@ -39,7 +39,7 @@ app.get("/webhook",(req,res)=>{
 
     
 })
-// const msg_body="call rajan chouhan at may 25, 2023 16:14"
+// const msg_body="call rajan chouhan at may 25, 2023 16:31"
 // let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
 // let recievedTime=new Date(time);
 // const currentTime= new Date();
@@ -67,7 +67,7 @@ app.post("/webhook", (req,res)=>{
             let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
             let recievedTime=new Date(time);
             const currentTime= new Date();
-            const timeDifference=(recievedTime.getTime()-currentTime.getTime());
+            const timeDifference=(recievedTime-currentTime);
             console.log(timeDifference,typeof(timeDifference));
             const sendMessage=()=>{
                 console.log(message);
