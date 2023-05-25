@@ -3,10 +3,16 @@ const bodyparser= require("body-parser");
 const axios = require("axios");
 const dotenv= require("dotenv");
 var moment = require('moment')
+
 const app=express();
 
 dotenv.config({path:"./config.env"})
 app.use(bodyparser.json());
+
+
+
+
+// chat gpt implementation ends her
 app.get('/',(req,res)=>{
     console.log(req.body);
     res.json({
@@ -36,6 +42,10 @@ app.get("/webhook",(req,res)=>{
 
 
 
+           
+
+
+
 app.post("/webhook", (req,res)=>{
     let body_param=req.body;
     console.log(body_param);
@@ -49,7 +59,12 @@ app.post("/webhook", (req,res)=>{
             let phone_no_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
-            const sendMessage=()=>{
+            const message=msg_body.slice(0,msg_body.length-18)
+            let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
+            let recievedTime=new Date(time);
+            const currentTime= new Date();
+            const timeDifference=recievedTime-currentTime;
+            const sendMessage=(message)=>{
 
                 axios({
                     method:"POST",
@@ -58,7 +73,7 @@ app.post("/webhook", (req,res)=>{
                         messaging_product:"whatsapp",
                         to:from,
                         text:{
-                            body:"Hi master rajan chouhan, i am at your service, Please give life "
+                            body:message
                         }
                     },
                     headers:{
@@ -73,7 +88,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:"Your task added!!!"
+                        body:`Your task "${message}" added!!!`
                     }
                 },
                 headers:{
