@@ -39,8 +39,12 @@ app.get("/webhook",(req,res)=>{
 
     
 })
-
-
+// const msg_body="call rajan chouhan at may 25, 2023 16:14"
+// let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
+// let recievedTime=new Date(time);
+// const currentTime= new Date();
+// const timeDifference=(recievedTime-currentTime);
+// console.log(timeDifference,typeof(timeDifference));
 
            
 
@@ -91,7 +95,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:`Your task "${message}" added!!!`
+                        body:`Your task "${message}" added!!!   ${time}`
                     }
                 },
                 headers:{
