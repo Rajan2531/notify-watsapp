@@ -39,12 +39,12 @@ app.get("/webhook",(req,res)=>{
 
     
 })
-// const msg_body="call rajan chouhan at may 25, 2023 16:31"
-// let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
-// let recievedTime=new Date(time);
-// const currentTime= new Date();
-// const timeDifference=(recievedTime-currentTime);
-// console.log(timeDifference,typeof(timeDifference));
+const msg_body="call rajan chouhan at may 25, 2023 18:07"
+let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
+let recievedTime=new Date(time);
+const currentTime= new Date();
+const timeDifference=(recievedTime-currentTime);
+console.log(timeDifference,typeof(timeDifference));
 
            
 
@@ -63,11 +63,13 @@ app.post("/webhook", (req,res)=>{
             let phone_no_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
+            console.log(msg_body);
             const message=msg_body.slice(0,msg_body.length-21)
+            console.log(message);
             let time=msg_body.slice(msg_body.length-18,msg_body.length)+":00";
-            let recievedTime=new Date(time);
+            let recievedTime=new Date(time).set;
             const currentTime= new Date();
-            const timeDifference=(recievedTime.getTime()-currentTime.getTime());
+            const timeDifference=(recievedTime-currentTime);
             console.log(timeDifference,typeof(timeDifference));
             const sendMessage=()=>{
                 console.log(message);
@@ -95,7 +97,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:`Your task "${message}" added. We will remind you on given time`
+                        body:`Your task "${message}" added. We will remind you on given time (${time})`
                     }
                 },
                 headers:{
