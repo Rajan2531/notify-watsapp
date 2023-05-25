@@ -64,7 +64,10 @@ app.post("/webhook", (req,res)=>{
             let recievedTime=new Date(time);
             const currentTime= new Date();
             const timeDifference=recievedTime-currentTime;
+            console.log(timeDifference,typeof(timeDifference));
             const sendMessage=()=>{
+                console.log(message);
+                console.log("send message function was called as scheduled");
 
                 axios({
                     method:"POST",
