@@ -160,7 +160,8 @@ app.post("/webhook", (req,res)=>{
                         messaging_product:"whatsapp",
                         to:from,
                         text:{
-                            body:`REMINDER \\n${message}`
+                            header:"REMINDER",
+                            body:`${message}`
                         }
                     },
                     headers:{
@@ -175,7 +176,7 @@ app.post("/webhook", (req,res)=>{
                     messaging_product:"whatsapp",
                     to:from,
                     text:{
-                        body:`Your task "${message}" added. We will remind you on given time (${time})`
+                        body:`Your task "${message}" added.`
                     }
                 },
                 headers:{
