@@ -45,7 +45,7 @@ if(msgArray[msgArray.length-3].toLowerCase()=="today")
     inputYear=date.getFullYear();
     let timeFromMsgBody=msgArray[(msgArray.length-1)];
     if(timeFromMsgBody.includes('.'))
-    timeFromMsgBody.replace('.',':');
+    timeFromMsgBody=timeFromMsgBody.replace('.',':');
     inputTime=timeFromMsgBody+":00";
     inputDateAndTime=inputMonth+" "+ inputDate + ", "+ inputYear+ " " +inputTime;
 
@@ -61,7 +61,7 @@ else if(msgArray[msgArray.length-3].toLowerCase()=="tomorrow")
     
     let timeFromMsgBody=msgArray[(msgArray.length-1)];
     if(timeFromMsgBody.includes('.'))
-    timeFromMsgBody.replace('.',':');
+   timeFromMsgBody= timeFromMsgBody.replace('.',':');
     inputTime=timeFromMsgBody+":00";
     inputDateAndTime=inputMonth+" "+ inputDate + ", "+ inputYear+ " " +inputTime;
 
