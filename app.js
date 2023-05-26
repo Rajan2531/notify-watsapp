@@ -58,6 +58,8 @@ if(msgArray[msgArray.length-3].toLowerCase()=="today")
     inputMonth=monthName.get((date.getMonth()).toString());
     inputYear=date.getFullYear();
     let timeFromMsgBody=msgArray[(msgArray.length-1)];
+    timeFromMsgBody="00"+timeFromMsgBody;
+    timeFromMsgBody=timeFromMsgBody.slice(timeFromMsgBody.length-5,timeFromMsgBody.length);
     if(timeFromMsgBody.includes('.'))
     timeFromMsgBody=timeFromMsgBody.replace('.',':');
     inputTime=timeFromMsgBody+":00";
@@ -74,6 +76,8 @@ else if(msgArray[msgArray.length-3].toLowerCase()=="tomorrow")
     inputYear=date1.getFullYear();
     
     let timeFromMsgBody=msgArray[(msgArray.length-1)];
+    timeFromMsgBody="00"+timeFromMsgBody;
+    timeFromMsgBody=timeFromMsgBody.slice(timeFromMsgBody.length-5,timeFromMsgBody.length);
     if(timeFromMsgBody.includes('.'))
    timeFromMsgBody= timeFromMsgBody.replace('.',':');
     inputTime=timeFromMsgBody+":00";
@@ -103,7 +107,8 @@ else
     inputMonth=monthName.get((monthString-1).toString());
     inputYear=recievedDateArray[2];
     let timeFromMsgBody=msgArray[msgArray.length-1];
-   
+    timeFromMsgBody="00"+timeFromMsgBody;
+    timeFromMsgBody=timeFromMsgBody.slice(timeFromMsgBody.length-5,timeFromMsgBody.length);
     if(timeFromMsgBody.includes("."))
     timeFromMsgBody=timeFromMsgBody.replace('.',':');
   
@@ -114,6 +119,7 @@ else
 }
 return inputDateAndTime;
 }
+
 
 
 
