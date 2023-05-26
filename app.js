@@ -143,7 +143,9 @@ app.post("/webhook", (req,res)=>{
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
             let msgArray=msg_body.split(' ');
-            const message=msgArray[0];
+            msgArray[msgArray.length-1]=msgArray[msgArray.length-2]=msgArray[msgArray.length-3]="";
+
+            const message=msgArray.join(" ");
             let time=extractTime(msg_body);
             let recievedTime=new Date(time);
             const currentTime= new Date();
