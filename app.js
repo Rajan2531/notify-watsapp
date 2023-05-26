@@ -11,6 +11,13 @@ dotenv.config({path:"./config.env"})
 app.use(bodyparser.json());
 
 
+
+
+
+
+
+
+
 ///-----------------------------------
 
 
@@ -28,6 +35,13 @@ const monthName=new Map([
     ["10","nov"],
     ["11","dec"]
 ])
+
+
+
+
+
+
+
 
 function extractTime(msgBody)
 {
@@ -70,20 +84,23 @@ else if(msgArray[msgArray.length-3].toLowerCase()=="tomorrow")
 else
 {
     let receivedDate=msgArray[msgArray.length-3];
+    while(receivedDate.includes('/')||receivedDate.includes('-')||receivedDate.includes(':'))
+    {
     if(receivedDate.includes('/'))
     receivedDate=receivedDate.replace('/','.');
     if(receivedDate.includes(':'))
     receivedDate=receivedDate.replace(':','.');
     if(receivedDate.includes('-'))
     receivedDate=receivedDate.replace('-','.');
-    if(receivedDate.includes('/'))
-    receivedDate=receivedDate.replace('/','.');
-   console.log(receivedDate);
+    }
+    
+  
     let recievedDateArray=receivedDate.split('.');
-    recievedDateArray[1]=recievedDateArray[1]/1;
+    let monthString=recievedDateArray[1]*1;
+   
     inputDate=recievedDateArray[0];
 
-    inputMonth=monthName.get((recievedDateArray[1]-1).toString());
+    inputMonth=monthName.get((monthString-1).toString());
     inputYear=recievedDateArray[2];
     let timeFromMsgBody=msgArray[msgArray.length-1];
    
@@ -97,6 +114,12 @@ else
 }
 return inputDateAndTime;
 }
+
+
+
+
+
+
 
 
 // chat gpt implementation ends her
