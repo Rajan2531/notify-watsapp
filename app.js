@@ -71,14 +71,14 @@ else
 {
     let receivedDate=msgArray[msgArray.length-3];
     if(receivedDate.includes('/'))
-    receivedDate==receivedDate.replace('/','.');
+    receivedDate=receivedDate.replace('/','.');
     if(receivedDate.includes(':'))
     receivedDate=receivedDate.replace(':','.');
     if(receivedDate.includes('-'))
     receivedDate=receivedDate.replace('-','.');
     if(receivedDate.includes('/'))
     receivedDate=receivedDate.replace('/','.');
-
+   console.log(receivedDate);
     let recievedDateArray=receivedDate.split('.');
     recievedDateArray[1]=recievedDateArray[1]/1;
     inputDate=recievedDateArray[0];
