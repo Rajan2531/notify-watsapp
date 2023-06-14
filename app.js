@@ -132,7 +132,7 @@ const openai =new OpenAIApi(configuration);
 let result;
  async function generate1(question){
     try{
-        const question ="write an intern resume."
+       
         
         const completion = await openai.createCompletion({
             model:"babbage",
