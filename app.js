@@ -120,6 +120,30 @@ else
 return inputDateAndTime;
 }
 
+///// implementation for openAi
+
+const openai =new OpenAIApi(configuration);
+
+let result;
+ async function generate1(question){
+    try{
+        const question ="write an intern resume."
+        
+        const completion = await openai.createCompletion({
+            model:"babbage",
+            prompt:question,
+            temperature:0.6,
+            
+        });
+        result = completion.data.choices[0].text
+       
+    }
+    catch(err)
+    {
+        result=err;
+    }
+}
+
 
 
 
@@ -171,20 +195,23 @@ app.post("/webhook", (req,res)=>{
             let phone_no_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
-            let msgArray=msg_body.split(' ');
-            msgArray[msgArray.length-1]=msgArray[msgArray.length-2]=msgArray[msgArray.length-3]="";
+            generate1(msg_body);
+            
+            
+            // let msgArray=msg_body.split(' ');
+            // msgArray[msgArray.length-1]=msgArray[msgArray.length-2]=msgArray[msgArray.length-3]="";
 
-            const message=msgArray.join(" ");
-            let time=extractTime(msg_body);
-            let recievedTime=new Date(time);
-            const currentTime= new Date();
-            const timeDifference=(recievedTime-currentTime);
-            console.log(timeDifference,typeof(timeDifference));
-            const sendMessage=()=>{
-                console.log(message);
-                console.log("send message function was called as scheduled",Date.now().toLocaleString());
+            // const message=msgArray.join(" ");
+            // let time=extractTime(msg_body);
+            // let recievedTime=new Date(time);
+            // const currentTime= new Date();
+            // const timeDifference=(recievedTime-currentTime);
+            // console.log(timeDifference,typeof(timeDifference));
+            // const sendMessage=()=>{
+            //     console.log(message);
+            //     console.log("send message function was called as scheduled",Date.now().toLocaleString());
 
-                axios({
+                generate1(msg_body).then(axios({
                     method:"POST",
                     url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
                     data:{
@@ -192,29 +219,29 @@ app.post("/webhook", (req,res)=>{
                         to:from,
                         text:{
                             
-                            body:`${message}`
+                            body:`${result}`
                         }
                     },
                     headers:{
                         "Content-Type":"application/json"
                     }
-                })
-            }
-            axios({
-                method:"POST",
-                url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
-                data:{
-                    messaging_product:"whatsapp",
-                    to:from,
-                    text:{
-                        body:`Your task "${message}" added.`
-                    }
-                },
-                headers:{
-                    "Content-Type":"application/json"
-                }
-            })
-            setTimeout(sendMessage,timeDifference);
+                }))
+            // }
+            // axios({
+            //     method:"POST",
+            //     url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
+            //     data:{
+            //         messaging_product:"whatsapp",
+            //         to:from,
+            //         text:{
+            //             body:`Your task "${message}" added.`
+            //         }
+            //     },
+            //     headers:{
+            //         "Content-Type":"application/json"
+            //     }
+            // })
+            // setTimeout(sendMessage,timeDifference);
 
             res.sendStatus(200);
 
