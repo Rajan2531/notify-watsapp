@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyparser= require("body-parser");
+const {Configuration, OpenAIApi} = require("openai");
 const axios = require("axios");
 const dotenv= require("dotenv");
 var moment = require('moment');
