@@ -135,7 +135,7 @@ let result;
        
         
         const completion = await openai.createCompletion({
-            model:"babbage",
+            model:"text-davinci-003",
             prompt:question,
             temperature:0.6,
             
@@ -200,7 +200,7 @@ app.post("/webhook", (req,res)=>{
             let phone_no_id = req.body.entry[0].changes[0].value.metadata.phone_number_id;
             let from = req.body.entry[0].changes[0].value.messages[0].from;
             let msg_body =req.body.entry[0].changes[0].value.messages[0].text.body;
-            generate1(msg_body);
+            
             
             
             // let msgArray=msg_body.split(' ');
@@ -216,7 +216,25 @@ app.post("/webhook", (req,res)=>{
             //     console.log(message);
             //     console.log("send message function was called as scheduled",Date.now().toLocaleString());
 
-                generate1(msg_body).then(axios({
+
+       
+            async function generate1(question){
+               try{
+                  
+                   
+                   const completion = await openai.createCompletion({
+                       model:"text-davinci-003",
+                       prompt:question,
+                       temperature:0.6,
+                       
+                   });
+                   
+              
+
+
+
+
+                axios({
                     method:"POST",
                     url:"https://graph.facebook.com/v16.0/"+phone_no_id+"/messages?access_token="+process.env.TOKEN,
                     data:{
@@ -224,13 +242,23 @@ app.post("/webhook", (req,res)=>{
                         to:from,
                         text:{
                             
-                            body:`${result}`
+                            body: completion.data.choices[0].text
                         }
                     },
                     headers:{
                         "Content-Type":"application/json"
                     }
-                }))
+                })
+
+
+                    
+               }
+               catch(err)
+               {
+                   result=err;
+               }
+           }
+           generate1(msg_body);
             // }
             // axios({
             //     method:"POST",
